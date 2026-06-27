@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solar Tracker ? Three.js Digital Twin</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/frontend/vendor/three/build/three.module.js",
+          "three/addons/": "/frontend/vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+    <script src="/frontend/vendor/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Solar Tracker Digital Twin</h1>
+        <span id="conn-status" class="disconnected">Starting?</span>
+      </header>
+
+      <div class="main">
+        <div id="viewport">
+          <canvas id="canvas3d"></canvas>
+          <div id="model-hint">Loading GLB?</div>
+        </div>
+
+        <div class="dashboard-panel">
+          <div class="dash-top">
+            <section class="card">
+              <h2>Angles (deg)</h2>
+              <div class="grid-2">
+                <div>
+                  <div class="label">current yaw</div>
+                  <div id="val-cyaw" class="value accent">?</div>
+                </div>
+                <div>
+                  <div class="label">target yaw</div>
+                  <div id="val-tyaw" class="value">?</div>
+                </div>
+                <div>
+                  <div class="label">current pitch</div>
+                  <div id="val-cpitch" class="value accent">?</div>
+                </div>
+                <div>
+                  <div class="label">target pitch</div>
+                  <div id="val-tpitch" class="value">?</div>
+                </div>
+              </div>
+              <div class="meta-row">
+                <span class="label">errYaw</span>
+                <span id="val-erryaw" class="value inline">?</span>
+                <span class="label">errPitch</span>
+                <span id="val-errpitch" class="value inline">?</span>
+                <span id="action-badge" class="hold">?</span>
+              </div>
+            </section>
+
+            <section class="card lux-chart-card">
+              <h2>Lux sensors (live)</h2>
+              <div class="chart-wrap chart-wrap-sm">
+                <canvas id="lux-chart"></canvas>
+              </div>
+              <div id="solar-instant" class="solar-instant">? V � ? mA � ? mW</div>
+            </section>
+          </div>
+
+          <section class="card chart-card">
+            <h2>Solar V / I / P (live)</h2>
+            <div class="chart-wrap">
+              <canvas id="power-chart"></canvas>
+            </div>
+            <div class="chart-foot">
+              <span class="label">samples</span>
+              <span id="val-count" class="value inline">0</span>
+              <span class="label">uptime ms</span>
+              <span id="val-ms" class="value inline">?</span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="telemetry_bridge.js"></script>
+    <script type="module">
+      const hint = document.getElementById("model-hint");
+      try {
+        await import("./main.js");
+      } catch (err) {
+        console.error("[3d] main.js failed", err);
+        if (hint) {
+          hint.textContent = "3D load failed: " + err.message + " (Ctrl+F5)";
+        }
+      }
+    </script>
+  </body>
+</html>
