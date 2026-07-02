@@ -1,3 +1,10 @@
+#WISH TO IMPROVE
+ADD offline algorithms (need dataset from local solar angle) can improve its accruracy I believe
+Additionally, apply CNN, RVCNN or CVCNN should be also taken into consideration, it needs time.
+
+
+
+
 # solar_tracker
 
 Light tracking on an ESP32-S3; view angles and charts in a browser on your PC.
@@ -11,7 +18,8 @@ pip install -r backend/requirements.txt
 python backend/serial_server.py
 ```
 
-Open http://127.0.0.1:8080/frontend/ in a browser. COM port and other setup notes are in `WEB_DASHBOARD.md`.
+Open http://127.*.*.1:****/frontend/ in a browser. COM port and other setup notes are in `WEB_DASHBOARD.md`.
+(****means your ports of your own computer, localized)
 
 
 
